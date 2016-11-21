@@ -6,6 +6,7 @@
 package umbrellaprogram.principal;
 
 
+import jade.core.Agent;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.AgentController;
@@ -41,7 +42,7 @@ public class UmbrellaProgram {
         
         
         
-        addAgent(containerController, "rma", "jade.tools.rma.rma", null);
+       // addAgent(containerController, "rma", "jade.tools.rma.rma", null);
         
         addAgent(containerController, "Sniffer", "jade.tools.sniffer.Sniffer", 
                                        new Object[]{"World", ";", "Human"});
@@ -66,5 +67,23 @@ public class UmbrellaProgram {
             s.printStackTrace();
         }
     }
-    
+     public static void addExistingAgent(ContainerController cc,
+            String nickname, Agent agent) 
+     {
+        //long time = System.currentTimeMillis();
+        
+        try 
+        {
+            //agentController = cc.createNewAgent(agent, classe, args);
+            agentController = cc.acceptNewAgent(nickname, agent);
+            
+            agentController.start();
+            //System.out.printf("Time to add agent: %d\n", System.currentTimeMillis() - time);
+        } catch (StaleProxyException s) 
+        {
+            System.out.println("error!");
+            s.printStackTrace();
+        }
+        //System.out.printf("agente adicionado: %d\n", System.currentTimeMillis() - time);
+    }
 }
