@@ -6,20 +6,14 @@
 package umbrellaprogram.agents;
 
 import jade.core.Agent;
-import jade.core.Profile;
-import jade.core.ProfileImpl;
 
-import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
-import jade.wrapper.StaleProxyException;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -66,7 +60,7 @@ public class World extends Agent{
     {
         containerController = this.getContainerController();
         rnd = new Random();
-        humanWorld  = new Human[50][50];
+        humanWorld  = new Human[50][200];
         
         for (int i = 0; i < population ; i++) 
         {
@@ -76,7 +70,7 @@ public class World extends Agent{
                 x = rnd.nextInt(humanWorld[0].length);
                 y = rnd.nextInt(humanWorld.length);
             } while (humanWorld[y][x] != null);
-            addHuman(new Human("Pessoa" + i, x, y));
+            addHuman(new Human("Pessoa " + i, x, y));
 
         }
 
@@ -89,7 +83,6 @@ public class World extends Agent{
             Logger.getLogger(World.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        //bug
         addBehaviour(new WorldBehaviour(this));
         
         SwingUtilities.invokeLater(new Runnable()
@@ -170,7 +163,7 @@ class MyPanel extends JPanel implements Runnable
   @Override
     public Dimension getPreferredSize() 
     {
-        return new Dimension(1280, 720);
+        return new Dimension(2000, 500);
     }
 
     @Override
@@ -181,7 +174,7 @@ class MyPanel extends JPanel implements Runnable
         float scaleY = getHeight() / humanWorld.length;
         float scaleX = getWidth() / humanWorld[0].length;
         float scale = scaleX < scaleY ? scaleX : scaleY;
-        g2d.setColor(Color.gray);
+        g2d.setColor(Color.green);
         for (int y = 0; y < humanWorld.length; y++) 
         {
             for (int x = 0; x < humanWorld[0].length; x++)

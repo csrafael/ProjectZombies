@@ -28,7 +28,6 @@ import umbrellaprogram.behaviour.*;
  */
 public class Human extends Agent {
     
-    public static final boolean HUMAN = true;
     public static final HashMap<String, Image> avatars = new HashMap<String, Image>();
 
     public int posX, posY;
@@ -36,17 +35,13 @@ public class Human extends Agent {
     
     public String name;
     public String mapaVisao[][];
-    public HashMap<String, Boolean> relacaoAgentes;
     
     private String imgHuman="res/human.png", imgZombie = "res/zombie.png";
     private Image avatar;
-
     protected Behaviour behaviour;
     
     public Human(String name, int posX, int posY) 
     {
-      //throw new UnsupportedOperationException("Not supported yet."); 
-      //To change body of generated methods, choose Tools | Templates.
         distancia_visao = 2;
         this.name = name;
         this.posX = posX;

@@ -7,14 +7,12 @@ package umbrellaprogram.behaviour;
 
 import jade.core.AID;
 import jade.core.behaviours.FSMBehaviour;
-import jade.core.behaviours.OneShotBehaviour;
-import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import umbrellaprogram.agents.Human;
-import javax.swing.JOptionPane;
 import static umbrellaprogram.behaviour.WorldBehaviour.*;
-
+import umbrellaprogram.agents.World.PosicaoPP;
+import umbrellaprogram.movements.*;
 /**
  *
  * @author rafael
@@ -30,6 +28,7 @@ public class PersonBehaviour extends FSMBehaviour {
 
     //Define as constantes das transições
     Human human;
+    PosicaoPP position;
     private final int UM = 1;
     private final int DOIS = 2;
     private final int TRES = 3;
@@ -37,7 +36,6 @@ public class PersonBehaviour extends FSMBehaviour {
     private final int ZERO = 0;
 
     private int transicao = 0;
-    private String entrada = "";
 
     public PersonBehaviour(Human h) {
         super(h);
@@ -61,22 +59,8 @@ public class PersonBehaviour extends FSMBehaviour {
         registerDefaultTransition(THIRD_STATE, ERROR_STATE);
         registerDefaultTransition(FOURTH_STATE, ERROR_STATE);
     }
-
-    private class FirstState extends Behaviour {
-
-        int c = 0;
-        public void action() {
-            enviaMsg(DIRECTION_UP);
-            try{
-                Thread.sleep(5000L);
-            }catch(Exception e){System.out.println(e.getStackTrace());}
-        }
-
-        public boolean done() {
-            return c > 10;
-        }
-
-        private void enviaMsg(int direcao) {
+    
+    public void enviaMsg(int direcao) {
             ACLMessage mensagem = new ACLMessage(ACLMessage.INFORM);
 
             //Preencher os campos necesários da mensagem
@@ -84,14 +68,29 @@ public class PersonBehaviour extends FSMBehaviour {
             mensagem.addReceiver(new AID("World", AID.ISLOCALNAME));
             mensagem.setContent(Integer.toString(direcao));
             myAgent.send(mensagem);
+    }
 
+    private class FirstState extends Behaviour {
+
+        public void action() {
+            StateOneMoves movesLikeJagger = new StateOneMoves(human);
+            //alterar nome dos agentes de Pessoa para - Zumbi/Curado
+            //necessario nos StateMoves
+            enviaMsg(movesLikeJagger.decision());
+            try{
+                Thread.sleep(500L);
+            }catch(Exception e){System.out.println(e.getStackTrace());}
+        }
+
+        public boolean done() {
+            return false;
         }
     }
 
     private class SecondState extends Behaviour {
 
         public void action() {
-
+            StateTwoMoves movesLikeJagger = new StateTwoMoves();
         }
 
         public boolean done() {
