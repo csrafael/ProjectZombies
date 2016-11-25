@@ -29,8 +29,7 @@ import umbrellaprogram.behaviour.*;
 public class Human extends Agent {
     
     public static final boolean HUMAN = true;
-    public static final HashMap<String, Image> 
-            avatars = new HashMap<String, Image>();
+    public static final HashMap<String, Image> avatars = new HashMap<String, Image>();
 
     public int posX, posY;
     public int distancia_visao;
@@ -44,7 +43,7 @@ public class Human extends Agent {
 
     protected Behaviour behaviour;
     
-    Human(String name, int posX, int posY) 
+    public Human(String name, int posX, int posY) 
     {
       //throw new UnsupportedOperationException("Not supported yet."); 
       //To change body of generated methods, choose Tools | Templates.
@@ -72,7 +71,7 @@ public class Human extends Agent {
     @Override
     protected void setup()
     {
-        addBehaviour(behaviour);
+        //addBehaviour(behaviour);
     }
     
 }

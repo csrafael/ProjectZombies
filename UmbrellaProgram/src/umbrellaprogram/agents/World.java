@@ -32,6 +32,7 @@ import javax.swing.SwingUtilities;
 import static umbrellaprogram.agents.World.humanWorld;
 
 import umbrellaprogram.behaviour.WorldBehaviour;
+import umbrellaprogram.principal.UmbrellaProgram;
 /**
  *
  * @author rafael
@@ -51,8 +52,8 @@ public class World extends Agent{
     }
     
 //World Dimension = 50
-    public static Human[][] humanWorld = new Human[50][50];
-    public static Random rnd = new Random();
+    public static Human[][] humanWorld;
+    public static Random rnd;
     public static HashMap<String, PosicaoPP> listaPosicoes =
             new HashMap<String, PosicaoPP>(1000);
         
@@ -64,6 +65,8 @@ public class World extends Agent{
     public void setup()
     {
         containerController = this.getContainerController();
+        rnd = new Random();
+        humanWorld  = new Human[50][50];
         
         for (int i = 0; i < population ; i++) 
         {
@@ -86,6 +89,7 @@ public class World extends Agent{
             Logger.getLogger(World.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        //bug
         addBehaviour(new WorldBehaviour(this));
         
         SwingUtilities.invokeLater(new Runnable()
@@ -105,14 +109,8 @@ public class World extends Agent{
         //containerController = this.getContainerController();
         humanWorld[h.posY][h.posX] = h;
         PosicaoPP posicaoPP = new PosicaoPP(h.posY, h.posX, h);
-      /*  umbrellaprogram.principal.UmbrellaProgram.addExistingAgent
-                                    (containerController, h.getName(),
-                                            humanWorld[h.posY][h.posX]);
-      */
-       // umbrellaprogram.principal.UmbrellaProgram.addAgent(containerController,
-       //         "Person", Human.class.getName(), humanWorld);
+        UmbrellaProgram.addExistingAgent(containerController, h.name , humanWorld[h.posY][h.posX]);
         listaPosicoes.put(h.getLocalName(), posicaoPP);
-
 
     }
     

@@ -14,10 +14,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import umbrellaprogram.agents.Human;
+
+import static umbrellaprogram.agents.World.humanWorld;
 
 import umbrellaprogram.agents.World;
 import umbrellaprogram.agents.World.PosicaoPP;
@@ -39,12 +41,6 @@ public class WorldBehaviour extends CyclicBehaviour {
     HashMap<AID, Boolean> decisoes;
     long time;
     
-    
-    
-    /**
-     *
-     * @param agent
-     */
     public WorldBehaviour(Agent agent)
     {
         super(agent);
@@ -52,10 +48,10 @@ public class WorldBehaviour extends CyclicBehaviour {
 
         decisoes = new HashMap<AID, Boolean>();
 
-     /*   for (String name : World.listaPosicoes.keySet() ) 
+        for (String name : World.listaPosicoes.keySet() ) 
         {
             decisoes.put(new AID(name, true), false);
-        }*/
+        }
         time = System.currentTimeMillis();
     }
     
@@ -85,7 +81,7 @@ public class WorldBehaviour extends CyclicBehaviour {
     
     public void sendMsg ()
     {
-        for (Map.Entry<String, PosicaoPP> nome_pos : World.listaPosicoes.entrySet()) {
+        for (Entry<String, PosicaoPP> nome_pos : World.listaPosicoes.entrySet()) {
 
             PosicaoPP posicaoPP = nome_pos.getValue();
             int centerX = posicaoPP.posX;

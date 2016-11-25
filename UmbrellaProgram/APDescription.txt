@@ -1,1 +1,1 @@
-( ap-description  :name "UFABC" :ap-services (set ( ap-service  :name fipa.mts.mtp.http.std :type fipa.mts.mtp.http.std :addresses (sequence http://rafael-Dell-System-Vostro-3450:7778/acc))))
+( ap-description  :name "UFABC" :ap-services (set ( ap-service  :name fipa.mts.mtp.http.std :type fipa.mts.mtp.http.std :addresses (sequence http://nero-Q550LF:7778/acc))))

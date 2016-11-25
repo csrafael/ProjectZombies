@@ -19,7 +19,7 @@ public class PersonBehaviour extends FSMBehaviour{
        //Define as constantes dos estados
    private static final String ONE_STATE = "EstadoHumano";
    private static final String TWO_STATE = "EstadoZumbi";
-   private static final String THREE_STATE = "EstadoTres";
+   private static final String THREE_STATE = "EstadoCurado";
    private static final String ERROR_STATE= "EstadoZero";
    
    //Define as constantes das transições
