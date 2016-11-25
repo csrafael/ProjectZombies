@@ -47,10 +47,11 @@ public class Human extends Agent {
     {
       //throw new UnsupportedOperationException("Not supported yet."); 
       //To change body of generated methods, choose Tools | Templates.
+        distancia_visao = 2;
         this.name = name;
         this.posX = posX;
         this.posY = posY;
-        
+        mapaVisao = new String[distancia_visao * 2 + 1][distancia_visao * 2 + 1];
         
         try {
                 avatar = ImageIO.read(new File(imgZombie));
@@ -71,7 +72,8 @@ public class Human extends Agent {
     @Override
     protected void setup()
     {
-        //addBehaviour(behaviour);
+        PersonBehaviour pb = new PersonBehaviour(this);
+        addBehaviour(pb);
     }
     
 }

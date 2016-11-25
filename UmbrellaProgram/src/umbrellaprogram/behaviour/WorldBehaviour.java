@@ -92,6 +92,7 @@ public class WorldBehaviour extends CyclicBehaviour {
             //Preencher os campos necesários da mensagem
             mensagem.setSender(myAgent.getAID());
 
+            //getKey retorna K em Entry<K,V>
             AID receiver = new AID(nome_pos.getKey(), AID.ISLOCALNAME);
             mensagem.addReceiver(receiver);
 
@@ -168,10 +169,7 @@ public class WorldBehaviour extends CyclicBehaviour {
                     //novoMapa[y][x] = Selva.mapa[y][x];
                     System.out.println("10 - DEBUG HERE");
                     decisoes.put(sender, Boolean.FALSE);
-                } else if (World.humanWorld[novoY][novoX] == null
-                        || (relacao = World.humanWorld[y][x].relacaoAgentes.
-                        get(World.humanWorld[novoY][novoX].getClass().getName())) != null
-                        && relacao == Human.HUMAN)
+                } else if (World.humanWorld[novoY][novoX] == null )//|| (relacao = World.humanWorld[y][x].relacaoAgentes.get(World.humanWorld[novoY][novoX].getClass().getName())) != null && relacao == Human.HUMAN)
                 {
                     if (World.humanWorld[novoY][novoX] != null)
                     {
