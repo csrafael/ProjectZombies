@@ -34,6 +34,7 @@ public class Human extends Agent {
     public int distancia_visao;
     
     public String name;
+    public int state;
     public String mapaVisao[][];
     
     private String imgHuman="res/human.png", imgZombie = "res/zombie.png";

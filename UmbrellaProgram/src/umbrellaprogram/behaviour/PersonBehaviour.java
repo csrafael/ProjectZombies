@@ -73,6 +73,7 @@ public class PersonBehaviour extends FSMBehaviour {
     private class FirstState extends Behaviour {
 
         public void action() {
+            human.state = 1;
             StateOneMoves movesLikeJagger = new StateOneMoves(human);
             //alterar nome dos agentes de Pessoa para - Zumbi/Curado
             //necessario nos StateMoves
@@ -90,7 +91,6 @@ public class PersonBehaviour extends FSMBehaviour {
     private class SecondState extends Behaviour {
 
         public void action() {
-            StateTwoMoves movesLikeJagger = new StateTwoMoves();
         }
 
         public boolean done() {
