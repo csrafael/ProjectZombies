@@ -44,8 +44,8 @@ public class UmbrellaProgram {
         
        // addAgent(containerController, "rma", "jade.tools.rma.rma", null);
         
-        addAgent(containerController, "Sniffer", "jade.tools.sniffer.Sniffer", 
-                                       new Object[]{"World", ";", "Human"});
+       // addAgent(containerController, "Sniffer", "jade.tools.sniffer.Sniffer", 
+         //                              new Object[]{"World", ";", "Human"});
     }
     
     public static void startMainContainer(String host, String port, String name) {

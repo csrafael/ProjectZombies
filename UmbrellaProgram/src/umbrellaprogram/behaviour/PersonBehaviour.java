@@ -77,7 +77,10 @@ public class PersonBehaviour extends FSMBehaviour {
             StateOneMoves movesLikeJagger = new StateOneMoves(human);
             //alterar nome dos agentes de Pessoa para - Zumbi/Curado
             //necessario nos StateMoves
+            int x = human.posX, y = human.posY;
             enviaMsg(movesLikeJagger.decision());
+            //receiveMsg();
+            System.out.println("x " + human.posX + " y " + human.posY);
             try{
                 Thread.sleep(500L);
             }catch(Exception e){System.out.println(e.getStackTrace());}
@@ -95,7 +98,7 @@ public class PersonBehaviour extends FSMBehaviour {
     private class SecondState extends Behaviour {
 
         public void action() {
-            human.state = 1;
+            human.state = 2;
             StateOneMoves movesLikeJagger = new StateOneMoves(human);
             enviaMsg(movesLikeJagger.decision());
             try{
@@ -103,6 +106,10 @@ public class PersonBehaviour extends FSMBehaviour {
             }catch(Exception e){System.out.println(e.getStackTrace());}
         }
 
+        public int onEnd(){
+            return human.transition;
+        }
+        
         public boolean done() {
             return human.state != 2;
         }

@@ -62,6 +62,8 @@ public class World extends Agent{
         rnd = new Random();
         humanWorld  = new Human[50][50];
         
+        //90% human; 10% zumbi
+        //mandar estado no construtor
         for (int i = 0; i < population ; i++) 
         {
             int x, y;
@@ -102,7 +104,8 @@ public class World extends Agent{
         //containerController = this.getContainerController();
         humanWorld[h.posY][h.posX] = h;
         PosicaoPP posicaoPP = new PosicaoPP(h.posY, h.posX, h);
-        UmbrellaProgram.addExistingAgent(containerController, h.name , humanWorld[h.posY][h.posX]);
+        UmbrellaProgram.addExistingAgent(containerController, h.name ,
+                humanWorld[h.posY][h.posX]);
         listaPosicoes.put(h.getLocalName(), posicaoPP);
 
     }
@@ -147,7 +150,6 @@ class MyPanel extends JPanel implements Runnable
             @Override
             public void mouseDragged(MouseEvent e) 
             {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
             @Override
