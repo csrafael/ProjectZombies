@@ -79,7 +79,7 @@ public class PersonBehaviour extends FSMBehaviour {
             //necessario nos StateMoves
             enviaMsg(movesLikeJagger.decision());
             try{
-                Thread.sleep(500L);
+                Thread.sleep(5000L);
             }catch(Exception e){System.out.println(e.getStackTrace());}
         }
 

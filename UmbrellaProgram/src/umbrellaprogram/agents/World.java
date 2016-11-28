@@ -60,7 +60,7 @@ public class World extends Agent{
     {
         containerController = this.getContainerController();
         rnd = new Random();
-        humanWorld  = new Human[50][200];
+        humanWorld  = new Human[50][50];
         
         for (int i = 0; i < population ; i++) 
         {
