@@ -89,26 +89,23 @@ public class PersonBehaviour extends FSMBehaviour {
             return human.state;
         }
         public boolean done() {
-            return false;
+            return human.state == 1;
         }
     }
 
     private class SecondState extends Behaviour {
 
         public void action() {
-            System.out.println("Hold on! I'm comin'");
             human.state = 1;
             StateOneMoves movesLikeJagger = new StateOneMoves(human);
-            //alterar nome dos agentes de Pessoa para - Zumbi/Curado
-            //necessario nos StateMoves
             enviaMsg(movesLikeJagger.decision());
             try{
-                Thread.sleep(5000L);
+                Thread.sleep(500L);
             }catch(Exception e){System.out.println(e.getStackTrace());}
         }
 
         public boolean done() {
-            return false;
+            return human.state == 2;
         }
     }
 
@@ -123,7 +120,7 @@ public class PersonBehaviour extends FSMBehaviour {
         }
         
         public boolean done() {
-            return false;
+            return human.state == 3;
         }
     }
 
@@ -138,10 +135,12 @@ public class PersonBehaviour extends FSMBehaviour {
         }
         
         public boolean done() {
-            return false;
+            return human.state == 4;
         }
     }
 
+    
+    //sem ideias pra essa crianca
     private class ErrorState extends Behaviour {
 
         public void action() {

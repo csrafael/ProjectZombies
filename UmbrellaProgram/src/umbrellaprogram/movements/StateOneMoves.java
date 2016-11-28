@@ -20,15 +20,20 @@ public class StateOneMoves {
     }
 
     public int decision() {
+        int l = 0, c = 0;
         for (int i = x - 2; i < x + 2; i++) {
             if (i > 0 && i < World.humanWorld.length) {
-                for (int j = y + 2; j > y - 2; j--) {
+                for (int j = y - 2; j < y + 2; j++) {
                     if(j > 0 && j < World.humanWorld.length)
-                        if(World.humanWorld[i][j] != null && (World.humanWorld[i][j].state == 1 || World.humanWorld[i][j].state == 3)) view[i%5][j%5] = 1;
-                        else if(World.humanWorld[i][j] != null && World.humanWorld[i][j].state == 2) view[i%5][j%5] = 2;
-                        else view[i%5][j%5] = 0;
+                        if(World.humanWorld[i][j] != null && (World.humanWorld[i][j].state == 1 
+                                || World.humanWorld[i][j].state == 3)) view[l][c] = World.humanWorld[i][j].state;
+                        else if(World.humanWorld[i][j] != null && World.humanWorld[i][j].state == 2) view[l][c] = World.humanWorld[i][j].state;
+                        else view[l][c] = 0;
+                    c++;
                 }
             }
+            c=0;
+            l++;
         }
         int flagR = 0, flagL = 0, flagU = 0, flagD = 0;
         for(int i = 0; i < 5; i++){
@@ -59,8 +64,6 @@ public class StateOneMoves {
                 h.posY++;
                 return WorldBehaviour.DIRECTION_DOWN;
         }
-        if(retorno == 0)
-            return new Random().nextInt(5);
         
         return WorldBehaviour.DIRECTION_NONE;
     }
