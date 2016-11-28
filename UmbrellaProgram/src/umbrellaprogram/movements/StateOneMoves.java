@@ -21,9 +21,9 @@ public class StateOneMoves {
 
     public int decision() {
         int l = 0, c = 0;
-        for (int i = x - 2; i < x + 2; i++) {
+        for (int i = x - 2; i <= x + 2; i++) {
             if (i > 0 && i < World.humanWorld.length) {
-                for (int j = y - 2; j < y + 2; j++) {
+                for (int j = y - 2; j <= y + 2; j++) {
                     if(j > 0 && j < World.humanWorld.length)
                         if(World.humanWorld[i][j] != null && (World.humanWorld[i][j].state == 1 
                                 || World.humanWorld[i][j].state == 3)) view[l][c] = World.humanWorld[i][j].state;

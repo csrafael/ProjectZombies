@@ -72,7 +72,6 @@ public class PersonBehaviour extends FSMBehaviour {
 
     private class FirstState extends Behaviour {
 
-        int c = 5;
         public void action() {
             human.state = 1;
             StateOneMoves movesLikeJagger = new StateOneMoves(human);
@@ -86,10 +85,10 @@ public class PersonBehaviour extends FSMBehaviour {
 
         
         public int onEnd(){
-            return human.state;
+            return human.transition;
         }
         public boolean done() {
-            return human.state == 1;
+            return human.state != 1;
         }
     }
 
@@ -105,7 +104,7 @@ public class PersonBehaviour extends FSMBehaviour {
         }
 
         public boolean done() {
-            return human.state == 2;
+            return human.state != 2;
         }
     }
 
@@ -116,11 +115,11 @@ public class PersonBehaviour extends FSMBehaviour {
         }
 
         public int onEnd(){
-            return human.state;
+            return human.transition;
         }
         
         public boolean done() {
-            return human.state == 3;
+            return human.state != 3;
         }
     }
 
@@ -131,7 +130,7 @@ public class PersonBehaviour extends FSMBehaviour {
         }
 
         public int onEnd(){
-            return human.state;
+            return human.transition;
         }
         
         public boolean done() {
@@ -148,7 +147,7 @@ public class PersonBehaviour extends FSMBehaviour {
         }
 
         public int onEnd(){
-            return human.state;
+            return human.transition;
         }
         
         public boolean done() {
