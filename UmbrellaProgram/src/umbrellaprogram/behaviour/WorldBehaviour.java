@@ -9,16 +9,12 @@ import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import umbrellaprogram.agents.Human;
-
-import static umbrellaprogram.agents.World.humanWorld;
 
 import umbrellaprogram.agents.World;
 import umbrellaprogram.agents.World.PosicaoPP;

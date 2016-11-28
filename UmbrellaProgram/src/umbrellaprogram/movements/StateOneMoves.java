@@ -51,6 +51,24 @@ public class StateOneMoves {
         int retorno = getMax(flagR, flagL, flagU, flagD);
         
         switch(retorno){
+            case 0:
+                Random rnd = new Random();
+                int move = rnd.nextInt(4) + 1;
+                switch(move){
+                    case WorldBehaviour.DIRECTION_RIGHT:
+                        h.posX++;
+                        return WorldBehaviour.DIRECTION_RIGHT;
+                    case WorldBehaviour.DIRECTION_LEFT:
+                        h.posX--;
+                        return WorldBehaviour.DIRECTION_LEFT;
+                    case WorldBehaviour.DIRECTION_UP:
+                        h.posY--;
+                        return WorldBehaviour.DIRECTION_UP;
+                    case WorldBehaviour.DIRECTION_DOWN:
+                        h.posY++;
+                        return WorldBehaviour.DIRECTION_DOWN;
+                }
+                return WorldBehaviour.DIRECTION_NONE;
             case 1:
                 h.posX++;
                 return WorldBehaviour.DIRECTION_RIGHT;
