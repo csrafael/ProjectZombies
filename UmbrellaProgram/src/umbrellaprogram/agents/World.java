@@ -174,7 +174,7 @@ class MyPanel extends JPanel implements Runnable
         float scaleY = getHeight() / humanWorld.length;
         float scaleX = getWidth() / humanWorld[0].length;
         float scale = scaleX < scaleY ? scaleX : scaleY;
-        g2d.setColor(Color.green);
+        g2d.setColor(Color.gray);
         for (int y = 0; y < humanWorld.length; y++) 
         {
             for (int x = 0; x < humanWorld[0].length; x++)

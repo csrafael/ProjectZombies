@@ -50,8 +50,8 @@ public class Human extends Agent {
         mapaVisao = new String[distancia_visao * 2 + 1][distancia_visao * 2 + 1];
         
         try {
-                avatar = ImageIO.read(new File(imgZombie));
-                avatars.put(imgZombie, avatar);
+                avatar = ImageIO.read(new File(imgHuman));
+                avatars.put(imgHuman, avatar);
             } catch (IOException ex) {
                 Logger.getLogger(Human.class.getName()).log(Level.SEVERE, null, ex);
             }
