@@ -7,6 +7,7 @@ import umbrellaprogram.behaviour.WorldBehaviour;
 
 public class StateOneMoves {
 
+    //a mudanca entre os estados deve acontecer aqui
     int x, y;
     int view[][];
     Human h;

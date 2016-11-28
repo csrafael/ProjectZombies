@@ -72,7 +72,31 @@ public class PersonBehaviour extends FSMBehaviour {
 
     private class FirstState extends Behaviour {
 
+        int c = 5;
         public void action() {
+            human.state = 1;
+            StateOneMoves movesLikeJagger = new StateOneMoves(human);
+            //alterar nome dos agentes de Pessoa para - Zumbi/Curado
+            //necessario nos StateMoves
+            enviaMsg(movesLikeJagger.decision());
+            try{
+                Thread.sleep(500L);
+            }catch(Exception e){System.out.println(e.getStackTrace());}
+        }
+
+        
+        public int onEnd(){
+            return human.state;
+        }
+        public boolean done() {
+            return false;
+        }
+    }
+
+    private class SecondState extends Behaviour {
+
+        public void action() {
+            System.out.println("Hold on! I'm comin'");
             human.state = 1;
             StateOneMoves movesLikeJagger = new StateOneMoves(human);
             //alterar nome dos agentes de Pessoa para - Zumbi/Curado
@@ -88,22 +112,16 @@ public class PersonBehaviour extends FSMBehaviour {
         }
     }
 
-    private class SecondState extends Behaviour {
-
-        public void action() {
-        }
-
-        public boolean done() {
-            return false;
-        }
-    }
-
     private class ThirdState extends Behaviour {
 
         public void action() {
 
         }
 
+        public int onEnd(){
+            return human.state;
+        }
+        
         public boolean done() {
             return false;
         }
@@ -115,6 +133,10 @@ public class PersonBehaviour extends FSMBehaviour {
 
         }
 
+        public int onEnd(){
+            return human.state;
+        }
+        
         public boolean done() {
             return false;
         }
@@ -126,6 +148,10 @@ public class PersonBehaviour extends FSMBehaviour {
 
         }
 
+        public int onEnd(){
+            return human.state;
+        }
+        
         public boolean done() {
             return false;
         }
