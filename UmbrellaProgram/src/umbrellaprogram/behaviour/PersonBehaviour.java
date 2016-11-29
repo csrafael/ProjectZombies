@@ -42,7 +42,7 @@ public class PersonBehaviour extends FSMBehaviour {
     private final int NASCEU = 5;
     private final int ZERO = 0;
 
-    public Double probability = Math.random();
+    
     
     public PersonBehaviour(Human h) {
         super(h);
@@ -108,6 +108,7 @@ public class PersonBehaviour extends FSMBehaviour {
     private class FirstState extends Behaviour {
 
         public void action() {
+            Double probability = Math.random();
             human.state = 1;
             StateOneMoves movesLikeJagger = new StateOneMoves(human);
             //alterar nome dos agentes de Pessoa para - Zumbi/Curado
@@ -116,17 +117,19 @@ public class PersonBehaviour extends FSMBehaviour {
 
             enviaMsg(movesLikeJagger.decision());
             
-            /* if (probability<0.1){
+             if (probability<0.05){
+                System.out.println("passei por aqui - Infectado "+probability);
                 human.transition=INFECTADO;
                 human.state=2;
              }
-             else if (probability>0.9){
+             else if (probability>0.99){
+                 System.out.println("passei por aqui - Curado "+probability);
                  human.transition=CURADO;
                  human.state=3;
-             }*/
+             }
             //receiveMsg();
             try{
-                Thread.sleep(50L);
+                Thread.sleep(500L);
             }catch(Exception e){System.out.println(e.getStackTrace());}
         }
 
@@ -142,13 +145,13 @@ public class PersonBehaviour extends FSMBehaviour {
     private class SecondState extends Behaviour {
 
         public void action() {
+            
             human.state = 2;
             StateOneMoves movesLikeJagger = new StateOneMoves(human);
             
             if (human.state==2)
             {    
                 try {
-                    System.out.println("passei por aqui - imagem");
                     human.avatar = ImageIO.read(new File(human.imgZombie));
                     avatars.put(human.imgZombie, human.avatar);
                 } catch (IOException ex) {
@@ -178,16 +181,22 @@ public class PersonBehaviour extends FSMBehaviour {
 
         public void action() {
             int count = 0;
-                  human.state = 3;
+            StateOneMoves movesLikeJagger = new StateOneMoves(human);
+            human.state = 3;
             if (human.state==3)
             {    
                 try {
-                    human.avatar = ImageIO.read(new File(human.imgZombie));
-                    avatars.put(human.imgZombie, human.avatar);
+                    human.avatar = ImageIO.read(new File(human.imgHealed));
+                    avatars.put(human.imgHealed, human.avatar);
                 } catch (IOException ex) {
                     Logger.getLogger(Human.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+             enviaMsg(movesLikeJagger.decision());
+             try{
+                Thread.sleep(500L);
+            }catch(Exception e){System.out.println(e.getStackTrace());}
+             
             count++;
           /*  if(count>10){
                 human.state=1;
@@ -195,6 +204,7 @@ public class PersonBehaviour extends FSMBehaviour {
             }*/
         }
 
+        
         public int onEnd(){
             return human.transition;
         }

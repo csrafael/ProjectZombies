@@ -63,12 +63,13 @@ public class WorldBehaviour extends CyclicBehaviour {
 
             //if (timeToSleep > 0) {
                 //System.out.printf("timeToSleep %d\n", timeToSleep);
-                Thread.sleep(100L);
+                Thread.sleep(10L);
             //}
         } catch (InterruptedException ex) {
             Logger.getLogger(WorldBehaviour.class.getName()).log(Level.SEVERE, null, ex);
         }
         World.day++;
+        System.out.println(World.day);
     }
 
     

@@ -172,7 +172,7 @@ class MyPanel extends JPanel implements Runnable
   @Override
     public Dimension getPreferredSize() 
     {
-        return new Dimension(2000, 500);
+        return new Dimension(800, 1000);
     }
 
     @Override
