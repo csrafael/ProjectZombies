@@ -37,26 +37,44 @@ public class Human extends Agent {
     public int state, transition;
     public String mapaVisao[][];
     
-    private String imgHuman="res/human.png", imgZombie = "res/zombie.png";
-    private Image avatar;
+    public String imgHuman="res/human.png", imgZombie = "res/zombie.png",imgHealed = "res/healed.png";
+    public  Image avatar;
     protected Behaviour behaviour;
     
-    public Human(String name, int posX, int posY) 
+    public Human(String name, int posX, int posY, int state) 
     {
         this.transition = 0;
         distancia_visao = 2;
         this.name = name;
         this.posX = posX;
         this.posY = posY;
+        this.state = state;
         mapaVisao = new String[distancia_visao * 2 + 1][distancia_visao * 2 + 1];
-        
-        try {
-                avatar = ImageIO.read(new File(imgHuman));
-                avatars.put(imgHuman, avatar);
-            } catch (IOException ex) {
-                Logger.getLogger(Human.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        
+        switch (state) {
+            case 1:
+                try {
+                    avatar = ImageIO.read(new File(imgHuman));
+                    avatars.put(imgHuman, avatar);
+                } catch (IOException ex) {
+                    Logger.getLogger(Human.class.getName()).log(Level.SEVERE, null, ex);
+                }   break;
+            case 2:
+                try {
+                    avatar = ImageIO.read(new File(imgZombie));
+                    avatars.put(imgZombie, avatar);
+                } catch (IOException ex) {
+                    Logger.getLogger(Human.class.getName()).log(Level.SEVERE, null, ex);
+                }   break;
+            case 3:
+                try {
+                    avatar = ImageIO.read(new File(imgHealed));
+                    avatars.put(imgHealed, avatar);
+                } catch (IOException ex) {
+                    Logger.getLogger(Human.class.getName()).log(Level.SEVERE, null, ex);
+                }   break;
+            default:
+                break;
+        }
     }
     
     public Image getAvatar() 
