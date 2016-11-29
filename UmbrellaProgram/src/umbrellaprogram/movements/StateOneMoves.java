@@ -27,6 +27,8 @@ public class StateOneMoves {
                     if (j > 0 && j < World.humanWorld.length) {
                         if (World.humanWorld[i][j] != null)
                             view[l][c] = World.humanWorld[i][j].state;
+                        
+                        
                         /*
                                 && (World.humanWorld[i][j].state == 1
                                 || World.humanWorld[i][j].state == 3)) {
