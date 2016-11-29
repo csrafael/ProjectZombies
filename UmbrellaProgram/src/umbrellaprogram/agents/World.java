@@ -72,8 +72,15 @@ public class World extends Agent{
                 x = rnd.nextInt(humanWorld[0].length);
                 y = rnd.nextInt(humanWorld.length);
             } while (humanWorld[y][x] != null);
-            addHuman(new Human("Pessoa " + i, x, y));
-
+            
+            if(i<population-1)
+            {
+                addHuman(new Human("Pessoa " + i, x, y,1));
+            }
+            else
+            {
+                addHuman(new Human("Pessoa " + i, x, y,2));
+            }
         }
 
         try 

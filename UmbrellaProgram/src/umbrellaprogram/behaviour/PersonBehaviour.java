@@ -9,7 +9,13 @@ import jade.core.AID;
 import jade.core.behaviours.FSMBehaviour;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import umbrellaprogram.agents.Human;
+import static umbrellaprogram.agents.Human.avatars;
 import static umbrellaprogram.behaviour.WorldBehaviour.*;
 import umbrellaprogram.agents.World.PosicaoPP;
 import umbrellaprogram.movements.*;
@@ -29,13 +35,15 @@ public class PersonBehaviour extends FSMBehaviour {
     //Define as constantes das transições
     Human human;
     PosicaoPP position;
-    private final int UM = 1;
-    private final int DOIS = 2;
-    private final int TRES = 3;
-    private final int QUATRO = 4;
-    private final int CINCO = 5;
+    private final int INFECTADO = 1;
+    private final int CURADO = 2;
+    private final int HUMANOMORTO = 3;
+    private final int ZUMBIMORTO = 4;
+    private final int NASCEU = 5;
     private final int ZERO = 0;
 
+    public Double probability = Math.random();
+    
     public PersonBehaviour(Human h) {
         super(h);
         human = h;
@@ -48,11 +56,11 @@ public class PersonBehaviour extends FSMBehaviour {
         registerState(new FourthState(), FOURTH_STATE);
         registerState(new ErrorState(), ERROR_STATE);
 
-        registerTransition(FIRST_STATE, SECOND_STATE, UM);
-        registerTransition(FIRST_STATE, THIRD_STATE, DOIS);
-        registerTransition(FIRST_STATE, FOURTH_STATE, TRES);
-        registerTransition(SECOND_STATE, FOURTH_STATE, QUATRO);
-        registerTransition(FOURTH_STATE, FIRST_STATE, CINCO);
+        registerTransition(FIRST_STATE, SECOND_STATE, INFECTADO);
+        registerTransition(FIRST_STATE, THIRD_STATE, CURADO);
+        registerTransition(FIRST_STATE, FOURTH_STATE, HUMANOMORTO);
+        registerTransition(SECOND_STATE, FOURTH_STATE, ZUMBIMORTO);
+        registerTransition(FOURTH_STATE, FIRST_STATE, NASCEU);
 
         registerDefaultTransition(FIRST_STATE, ERROR_STATE);
         registerDefaultTransition(SECOND_STATE, ERROR_STATE);
@@ -104,8 +112,18 @@ public class PersonBehaviour extends FSMBehaviour {
             StateOneMoves movesLikeJagger = new StateOneMoves(human);
             //alterar nome dos agentes de Pessoa para - Zumbi/Curado
             //necessario nos StateMoves
-            int x = human.posX, y = human.posY;
+            //int x = human.posX, y = human.posY;
+
             enviaMsg(movesLikeJagger.decision());
+            
+            /* if (probability<0.1){
+                human.transition=INFECTADO;
+                human.state=2;
+             }
+             else if (probability>0.9){
+                 human.transition=CURADO;
+                 human.state=3;
+             }*/
             //receiveMsg();
             try{
                 Thread.sleep(50L);
@@ -126,7 +144,22 @@ public class PersonBehaviour extends FSMBehaviour {
         public void action() {
             human.state = 2;
             StateOneMoves movesLikeJagger = new StateOneMoves(human);
+            
+            if (human.state==2)
+            {    
+                try {
+                    System.out.println("passei por aqui - imagem");
+                    human.avatar = ImageIO.read(new File(human.imgZombie));
+                    avatars.put(human.imgZombie, human.avatar);
+                } catch (IOException ex) {
+                    Logger.getLogger(Human.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            
             enviaMsg(movesLikeJagger.decision());
+            
+           
             try{
                 Thread.sleep(500L);
             }catch(Exception e){System.out.println(e.getStackTrace());}
@@ -144,7 +177,22 @@ public class PersonBehaviour extends FSMBehaviour {
     private class ThirdState extends Behaviour {
 
         public void action() {
-
+            int count = 0;
+                  human.state = 3;
+            if (human.state==3)
+            {    
+                try {
+                    human.avatar = ImageIO.read(new File(human.imgZombie));
+                    avatars.put(human.imgZombie, human.avatar);
+                } catch (IOException ex) {
+                    Logger.getLogger(Human.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            count++;
+          /*  if(count>10){
+                human.state=1;
+                human.transition=
+            }*/
         }
 
         public int onEnd(){
