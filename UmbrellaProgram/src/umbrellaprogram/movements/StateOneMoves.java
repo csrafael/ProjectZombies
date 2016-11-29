@@ -25,7 +25,7 @@ public class StateOneMoves {
             if (i > 0 && i < World.humanWorld.length) {
                 for (int j = y - 2; j <= y + 2; j++) {
                     if (j > 0 && j < World.humanWorld.length) {
-                        if (World.humanWorld[i][j] != null 
+                        if (World.humanWorld[i][j] != null
                                 && (World.humanWorld[i][j].state == 1
                                 || World.humanWorld[i][j].state == 3)) {
                             view[l][c] = World.humanWorld[i][j].state;
@@ -65,37 +65,57 @@ public class StateOneMoves {
         }
         int retorno = getMax(flagR, flagL, flagU, flagD);
 
+        
+        //AS ATUALIZACOES DE X E Y SERAO DEIXADAS PARA A COMINUCACAO COM
+        //A CLASSE WORLDBEHAVIOUR
         switch (retorno) {
             case 0:
                 Random rnd = new Random();
                 int move = rnd.nextInt(4) + 1;
                 switch (move) {
                     case WorldBehaviour.DIRECTION_RIGHT:
-                        h.posX++;
-                        return WorldBehaviour.DIRECTION_RIGHT;
+                        if (h.posX + 1 < World.humanWorld.length) {
+                            //h.posX++;
+                            return WorldBehaviour.DIRECTION_RIGHT;
+                        }
                     case WorldBehaviour.DIRECTION_LEFT:
-                        h.posX--;
-                        return WorldBehaviour.DIRECTION_LEFT;
+                        if (h.posX - 1 > 0) {
+                            //h.posX--;
+                            return WorldBehaviour.DIRECTION_LEFT;
+                        }
                     case WorldBehaviour.DIRECTION_UP:
-                        h.posY--;
-                        return WorldBehaviour.DIRECTION_UP;
+                        if (h.posY - 1 > 0) {
+                            //h.posY--;
+                            return WorldBehaviour.DIRECTION_UP;
+                        }
                     case WorldBehaviour.DIRECTION_DOWN:
-                        h.posY++;
-                        return WorldBehaviour.DIRECTION_DOWN;
+                        if (h.posY + 1 < World.humanWorld.length) {
+                            //h.posY++;
+                            return WorldBehaviour.DIRECTION_DOWN;
+                        }
+                        //return WorldBehaviour.DIRECTION_NONE;
                 }
-                return WorldBehaviour.DIRECTION_NONE;
+            //return WorldBehaviour.DIRECTION_NONE;
             case 1:
-                h.posX++;
-                return WorldBehaviour.DIRECTION_RIGHT;
+                if (h.posX + 1 < World.humanWorld.length) {
+                    //h.posX++;
+                    return WorldBehaviour.DIRECTION_RIGHT;
+                }
             case 2:
-                h.posX--;
-                return WorldBehaviour.DIRECTION_LEFT;
+                if (h.posX - 1 > 0) {
+                    //h.posX--;
+                    return WorldBehaviour.DIRECTION_LEFT;
+                }
             case 3:
-                h.posY--;
-                return WorldBehaviour.DIRECTION_UP;
+                if (h.posY - 1 > 0) {
+                    //h.posY--;
+                    return WorldBehaviour.DIRECTION_UP;
+                }
             case 4:
-                h.posY++;
-                return WorldBehaviour.DIRECTION_DOWN;
+                if (h.posY + 1 < World.humanWorld.length) {
+                    //h.posY++;
+                    return WorldBehaviour.DIRECTION_DOWN;
+                }
         }
 
         return WorldBehaviour.DIRECTION_NONE;

@@ -49,25 +49,31 @@ public class WorldBehaviour extends CyclicBehaviour {
     }
 
     public void action() {
-        time = System.currentTimeMillis();
-        sendMsg();
+        
+        //TIME E SENDMSG SE TORNARAM OBSOLETOS
+        
+        //time = System.currentTimeMillis();
+        //sendMsg();
         receivingMsg();
         makeDecision();
 
         try {
-            int timeToSleep = (int) (400L - System.currentTimeMillis() + time);
+            //IRRELEVANTE, 100L EH O BASTANTE PARA O MUNDO DAR "REFRESH"
+          //  int timeToSleep = (int) (400L - System.currentTimeMillis() + time);
 
-            if (timeToSleep > 0) {
+            //if (timeToSleep > 0) {
                 //System.out.printf("timeToSleep %d\n", timeToSleep);
-                Thread.sleep(timeToSleep);
-            }
+                Thread.sleep(100L);
+            //}
         } catch (InterruptedException ex) {
             Logger.getLogger(WorldBehaviour.class.getName()).log(Level.SEVERE, null, ex);
         }
         World.day++;
     }
 
-    public void sendMsg() {
+    
+    //GOODBYE, MOTHER FUCKER
+    /*public void sendMsg() {
         for (Entry<String, PosicaoPP> nome_pos : World.listaPosicoes.entrySet()) {
 
             PosicaoPP posicaoPP = nome_pos.getValue();
@@ -107,7 +113,7 @@ public class WorldBehaviour extends CyclicBehaviour {
             mensagem.setContent(sb.toString());
             myAgent.send(mensagem);
         }
-    }
+    }*/
 
     public void receivingMsg() {
         for (int numMsg = 0; numMsg < World.listaPosicoes.size(); numMsg++) {
@@ -119,8 +125,7 @@ public class WorldBehaviour extends CyclicBehaviour {
     private void makeDecision() {
         decisoes.clear();
         Collections.shuffle(mensagensRecebidas);
-        //PresaPredador novoMapa[][] =
-        //        new PresaPredador[Selva.mapa.length][Selva.mapa[0].length];
+        
         while (mensagensRecebidas.size() > 0) {
             ACLMessage mensagem = mensagensRecebidas.poll();
             int direcao = Integer.parseInt(mensagem.getContent());
@@ -132,7 +137,7 @@ public class WorldBehaviour extends CyclicBehaviour {
                 continue;
             }
             int y = pp.posY, x = pp.posX;
-            if (y == World.humanWorld.length || x == World.humanWorld[0].length) {
+            if (y == World.humanWorld.length || x == World.humanWorld.length) {
                 System.out.println("1 - DEBUG HERE");
             }
             int novoX = x;
@@ -147,9 +152,9 @@ public class WorldBehaviour extends CyclicBehaviour {
                 novoX--;
             }
 
-            Boolean relacao;
             if (novoY < 0 || novoY >= World.humanWorld.length || novoX < 0 || novoX >= World.humanWorld[0].length) {
-                System.out.println("10 - DEBUG HERE");
+                //IT'S NOT A BUG, IT'S A FEATURE!!
+                //System.out.println("10 - DEBUG HERE");
                 decisoes.put(sender, Boolean.FALSE);
             } else if (World.humanWorld[novoY][novoX] == null) {
                 World.humanWorld[novoY][novoX] = World.humanWorld[y][x];

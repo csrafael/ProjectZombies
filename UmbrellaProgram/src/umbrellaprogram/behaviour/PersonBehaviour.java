@@ -33,9 +33,8 @@ public class PersonBehaviour extends FSMBehaviour {
     private final int DOIS = 2;
     private final int TRES = 3;
     private final int QUATRO = 4;
+    private final int CINCO = 5;
     private final int ZERO = 0;
-
-    private int transicao = 0;
 
     public PersonBehaviour(Human h) {
         super(h);
@@ -53,6 +52,7 @@ public class PersonBehaviour extends FSMBehaviour {
         registerTransition(FIRST_STATE, THIRD_STATE, DOIS);
         registerTransition(FIRST_STATE, FOURTH_STATE, TRES);
         registerTransition(SECOND_STATE, FOURTH_STATE, QUATRO);
+        registerTransition(FOURTH_STATE, FIRST_STATE, CINCO);
 
         registerDefaultTransition(FIRST_STATE, ERROR_STATE);
         registerDefaultTransition(SECOND_STATE, ERROR_STATE);
@@ -69,6 +69,33 @@ public class PersonBehaviour extends FSMBehaviour {
             mensagem.setContent(Integer.toString(direcao));
             myAgent.send(mensagem);
     }
+    
+    
+    //DESNECESARIO
+    
+    
+    
+    /*void recebeMsg() {
+        ACLMessage mensagem = myAgent.blockingReceive();
+        String msgRecebida = mensagem.getContent();
+
+        //Atualizando as crencas
+        String[] linhasMsgRecebida = msgRecebida.split("\n");
+        //pos 0 indica se moveu ou nao
+
+        if (linhasMsgRecebida[0].endsWith("false")) {
+            direcaoTurnoAnterior = DIRECTION_NONE;
+        } else {
+            atualizaPosicaoInterna(direcaoTurnoAnterior);
+        }
+        for (int y = 1; y < linhasMsgRecebida.length; y++) {
+            String[] colunasDeUmaLinha = linhasMsgRecebida[y].split(",");
+            System.arraycopy(colunasDeUmaLinha, 0,
+                    agentPP.mapaVisao[y - 1],
+                    0, colunasDeUmaLinha.length);
+        }
+
+    }*/
 
     private class FirstState extends Behaviour {
 
@@ -80,7 +107,6 @@ public class PersonBehaviour extends FSMBehaviour {
             int x = human.posX, y = human.posY;
             enviaMsg(movesLikeJagger.decision());
             //receiveMsg();
-            System.out.println("x " + human.posX + " y " + human.posY);
             try{
                 Thread.sleep(500L);
             }catch(Exception e){System.out.println(e.getStackTrace());}
