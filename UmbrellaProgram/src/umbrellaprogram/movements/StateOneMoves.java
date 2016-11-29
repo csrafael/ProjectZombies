@@ -12,64 +12,113 @@ public class StateOneMoves {
     int view[][];
     Human h;
 
-    public StateOneMoves(Human h) {
+    public class struct {
+
+        public String name;
+        public int count, retorno;
+    }
+
+    public StateOneMoves(Human h, int view[][]) {
         this.h = h;
         x = h.posX;
         y = h.posY;
-        view = new int[5][5];
+        this.view = view;
     }
 
     public int decision() {
-        int l = 0, c = 0;
-        for (int i = x - 2; i <= x + 2; i++) {
-            if (i > 0 && i < World.humanWorld.length) {
-                for (int j = y - 2; j <= y + 2; j++) {
-                    if (j > 0 && j < World.humanWorld.length) {
-                        if (World.humanWorld[i][j] != null) {
-                            view[l][c] = World.humanWorld[i][j].state;
-                        } else {
-                            view[l][c] = 0;
-                        }
-                    }
-                    c++;
-                }
+        /*for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                System.out.print(view[i][j] + " ");
             }
-            c = 0;
-            l++;
+            System.out.println();
         }
+        System.out.println();*/
         int flagR = 0, flagL = 0, flagU = 0, flagD = 0;
         for (int i = 0; i < 5; i++) {
-            if (view[i][0] == 1 || view[i][1] == 1) {
-                flagL++;
-            }
-            if (view[i][0] == 2 || view[i][1] == 2) {
-                flagL -= 2;
-            }
-            if (view[i][4] == 1 || view[i][3] == 1) {
-                flagR++;
-            }
-            if (view[i][4] == 2 || view[i][3] == 2) {
-                flagR -= 2;
-            }
-        }
-        for (int i = 0; i < 5; i++) {
-            if (view[0][i] == 1 || view[1][i] == 1) {
+            if (view[i][0] == 1)
                 flagU++;
-            }
-            if (view[0][i] == 2 || view[1][i] == 2) {
+            if (view[i][1] == 1)
+                flagU++;
+            if (view[i][0] == 2)
                 flagU -= 2;
-            }
-            if (view[4][i] == 1 || view[3][i] == 1) {
+            if (view[i][1] == 2)
+                flagU -= 2;
+            if (view[i][4] == 1)
                 flagD++;
-            }
-            if (view[4][i] == 2 || view[3][i] == 2) {
+            if (view[i][3] == 1)
+                flagD++;
+            if (view[i][4] == 2)
                 flagD -= 2;
+            if (view[i][3] == 2)
+                flagD -= 2;
+        }
+        for (int i = 2; i < 3; i++) {
+            if (view[0][i] == 1)
+                flagL++;
+            if(view[1][i] == 1)
+                flagL++;
+            if (view[0][i] == 2)
+                flagL -= 2;
+            if (view[1][i] == 2)
+                flagL -= 2;
+            if (view[4][i] == 1)
+                flagR++;
+            if (view[3][i] == 1)
+                flagR++;
+            if (view[4][i] == 2)
+                flagR -= 2;
+            if (view[3][i] == 2) 
+                flagR -= 2;
+        }
+
+        struct R = new struct();
+        R.count = flagR;
+        R.name = "R";
+        R.retorno = WorldBehaviour.DIRECTION_RIGHT;
+
+        struct L = new struct();
+        L.count = flagL;
+        L.name = "L";
+        L.retorno = WorldBehaviour.DIRECTION_LEFT;
+
+        struct U = new struct();
+        U.count = flagU;
+        U.name = "U";
+        U.retorno = WorldBehaviour.DIRECTION_UP;
+
+        struct D = new struct();
+        D.count = flagD;
+        D.name = "D";
+        D.retorno = WorldBehaviour.DIRECTION_DOWN;
+
+        struct k[] = {R, L, U, D};
+        ordena(k);
+
+        int c = 0;
+        for (int i = 0; i < k.length; i++) {
+            if (k[i].count == k[0].count) {
+                c++;
             }
         }
+
+        Random rand = new Random();
+        int retorno = k[rand.nextInt(c)].retorno;
+
+        /*switch (retorno) {
+            case WorldBehaviour.DIRECTION_RIGHT:
+                if(h.posX == World.humanWorld.length - 1) return WorldBehaviour.DIRECTION_NONE;
+            case WorldBehaviour.DIRECTION_LEFT:
+                if(h.posX < 1) return WorldBehaviour.DIRECTION_NONE;
+            case WorldBehaviour.DIRECTION_UP:
+                if(h.posY < 1) return WorldBehaviour.DIRECTION_NONE;
+            case WorldBehaviour.DIRECTION_DOWN:
+                if(h.posY == World.humanWorld.length - 1) return WorldBehaviour.DIRECTION_NONE;
+        }*/
+
+        return retorno;
+        /*
         int retorno = getMax(flagR, flagL, flagU, flagD);
 
-        //AS ATUALIZACOES DE X E Y SERAO DEIXADAS PARA A COMINUCACAO COM
-        //A CLASSE WORLDBEHAVIOUR
         switch (retorno) {
             case 0:
                 Random rnd = new Random();
@@ -86,7 +135,6 @@ public class StateOneMoves {
 
                     case WorldBehaviour.DIRECTION_DOWN:
                         return WorldBehaviour.DIRECTION_DOWN;
-
                 }
             case 1:
                 return WorldBehaviour.DIRECTION_RIGHT;
@@ -101,10 +149,10 @@ public class StateOneMoves {
                 return WorldBehaviour.DIRECTION_DOWN;
         }
 
-        return WorldBehaviour.DIRECTION_NONE;
+        return WorldBehaviour.DIRECTION_NONE;*/
     }
 
-    private int getMax(int a, int b, int c, int d) {
+    /*private int getMax(int a, int b, int c, int d) {
         if ((a > b) && (a > c) && (a > d)) {
             return 1;
         } else if ((b > a) && (b > c) && (b > d)) {
@@ -115,5 +163,16 @@ public class StateOneMoves {
             return 4;
         }
         return 0;
+    }*/
+    private void ordena(struct k[]) {
+        for (int i = 0; i < k.length; i++) {
+            for (int j = i + 1; j < k.length; j++) {
+                if (k[j].count > k[i].count) {
+                    struct tmp = k[i];
+                    k[i] = k[j];
+                    k[j] = tmp;
+                }
+            }
+        }
     }
 }

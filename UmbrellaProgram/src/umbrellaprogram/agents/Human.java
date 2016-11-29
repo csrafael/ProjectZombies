@@ -35,7 +35,7 @@ public class Human extends Agent {
     
     public String name;
     public int state, transition;
-    public String mapaVisao[][];
+    public int mapaVisao[][];
     
     public String imgHuman="res/human.png", imgZombie = "res/zombie.png",imgHealed = "res/healed.png";
     public  Image avatar;
@@ -49,7 +49,7 @@ public class Human extends Agent {
         this.posX = posX;
         this.posY = posY;
         this.state = state;
-        mapaVisao = new String[distancia_visao * 2 + 1][distancia_visao * 2 + 1];
+        mapaVisao = new int[distancia_visao * 2 + 1][distancia_visao * 2 + 1];
         switch (state) {
             case 1:
                 try {

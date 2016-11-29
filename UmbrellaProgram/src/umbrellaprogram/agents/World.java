@@ -51,7 +51,7 @@ public class World extends Agent{
     public static HashMap<String, PosicaoPP> listaPosicoes =
             new HashMap<String, PosicaoPP>(1000);
         
-    public static int population = 100;
+    public static int population = 300;
     public static long day;
             
     ContainerController containerController;
@@ -73,14 +73,8 @@ public class World extends Agent{
                 y = rnd.nextInt(humanWorld.length);
             } while (humanWorld[y][x] != null);
             
-            if(i<population-1)
-            {
-                addHuman(new Human("Pessoa " + i, x, y,1));
-            }
-            else
-            {
-                addHuman(new Human("Pessoa " + i, x, y,2));
-            }
+            addHuman(new Human("Pessoa " + i, x, y,1));
+            
         }
 
         try 

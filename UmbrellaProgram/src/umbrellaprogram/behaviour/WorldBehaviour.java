@@ -53,18 +53,12 @@ public class WorldBehaviour extends CyclicBehaviour {
         //TIME E SENDMSG SE TORNARAM OBSOLETOS
         
         //time = System.currentTimeMillis();
-        //sendMsg();
+        sendMsg();
         receivingMsg();
         makeDecision();
 
         try {
-            //IRRELEVANTE, 100L EH O BASTANTE PARA O MUNDO DAR "REFRESH"
-          //  int timeToSleep = (int) (400L - System.currentTimeMillis() + time);
-
-            //if (timeToSleep > 0) {
-                //System.out.printf("timeToSleep %d\n", timeToSleep);
-                Thread.sleep(10L);
-            //}
+                Thread.sleep(500L);
         } catch (InterruptedException ex) {
             Logger.getLogger(WorldBehaviour.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -73,8 +67,7 @@ public class WorldBehaviour extends CyclicBehaviour {
     }
 
     
-    //GOODBYE, MOTHER FUCKER
-    /*public void sendMsg() {
+    public void sendMsg() {
         for (Entry<String, PosicaoPP> nome_pos : World.listaPosicoes.entrySet()) {
 
             PosicaoPP posicaoPP = nome_pos.getValue();
@@ -98,13 +91,13 @@ public class WorldBehaviour extends CyclicBehaviour {
                     int posRealX = centerX - posicaoPP.hz.distancia_visao + x;
                     if (posRealY < 0 || posRealX < 0
                             || posRealY >= World.humanWorld.length
-                            || posRealX >= World.humanWorld[0].length) {
-                        sb.append("1");
+                            || posRealX >= World.humanWorld.length) {
+                        sb.append("-1");
                     } else if (World.humanWorld[posRealY][posRealX] == null) {
                         sb.append("0");
-                    } else {
-                        sb.append(
-                                World.humanWorld[posRealY][posRealX].getClass().getName());
+                    } 
+                    else {
+                        sb.append(World.humanWorld[posRealY][posRealX].state);
                     }
                     sb.append(",");
                 }
@@ -114,7 +107,7 @@ public class WorldBehaviour extends CyclicBehaviour {
             mensagem.setContent(sb.toString());
             myAgent.send(mensagem);
         }
-    }*/
+    }
 
     public void receivingMsg() {
         for (int numMsg = 0; numMsg < World.listaPosicoes.size(); numMsg++) {

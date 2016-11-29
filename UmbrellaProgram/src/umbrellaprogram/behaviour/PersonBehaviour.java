@@ -31,16 +31,17 @@ public class PersonBehaviour extends FSMBehaviour {
     private static final String THIRD_STATE = "EstadoImune";
     private static final String FOURTH_STATE = "EstadoMorto";
     private static final String ERROR_STATE = "EstadoZero";
+    private int direcaoTurnoAnterior;
 
     //Define as constantes das transições
     Human human;
     PosicaoPP position;
-    private final int INFECTADO = 1;
-    private final int CURADO = 2;
-    private final int HUMANOMORTO = 3;
-    private final int ZUMBIMORTO = 4;
-    private final int NASCEU = 5;
-    private final int ZERO = 0;
+    public static final int INFECTADO = 1;
+    public static final int CURADO = 2;
+    public static final int HUMANOMORTO = 3;
+    public static final int ZUMBIMORTO = 4;
+    public static final int NASCEU = 5;
+    public static final int ZERO = 0;
 
     
     
@@ -77,63 +78,60 @@ public class PersonBehaviour extends FSMBehaviour {
             mensagem.setContent(Integer.toString(direcao));
             myAgent.send(mensagem);
     }
+    void atualizaPosicaoInterna(int mov){
+        direcaoTurnoAnterior = mov;
+        switch(mov){
+            case WorldBehaviour.DIRECTION_UP:
+                human.posY--;
+            case WorldBehaviour.DIRECTION_DOWN:
+                human.posY++;
+            case WorldBehaviour.DIRECTION_RIGHT:
+                human.posX++;
+            case WorldBehaviour.DIRECTION_LEFT:
+                human.posX--;
+        }
+    }
     
-    
-    //DESNECESARIO
-    
-    
-    
-    /*void recebeMsg() {
+    void recebeMsg() {
         ACLMessage mensagem = myAgent.blockingReceive();
         String msgRecebida = mensagem.getContent();
-
-        //Atualizando as crencas
+        //System.out.println(mensagem.getContent());
         String[] linhasMsgRecebida = msgRecebida.split("\n");
-        //pos 0 indica se moveu ou nao
 
         if (linhasMsgRecebida[0].endsWith("false")) {
             direcaoTurnoAnterior = DIRECTION_NONE;
-        } else {
+        }else {
             atualizaPosicaoInterna(direcaoTurnoAnterior);
         }
         for (int y = 1; y < linhasMsgRecebida.length; y++) {
             String[] colunasDeUmaLinha = linhasMsgRecebida[y].split(",");
-            System.arraycopy(colunasDeUmaLinha, 0,
-                    agentPP.mapaVisao[y - 1],
-                    0, colunasDeUmaLinha.length);
+            for(int x = 0; x < 5; x++){
+                human.mapaVisao[x][y-1] = Integer.parseInt(colunasDeUmaLinha[x]);
+            }
         }
-
-    }*/
+    }
 
     private class FirstState extends Behaviour {
 
         public void action() {
             Double probability = Math.random();
+            recebeMsg();
             human.state = 1;
-            StateOneMoves movesLikeJagger = new StateOneMoves(human);
-            //alterar nome dos agentes de Pessoa para - Zumbi/Curado
-            //necessario nos StateMoves
-            //int x = human.posX, y = human.posY;
-
+            StateOneMoves movesLikeJagger = new StateOneMoves(human, human.mapaVisao);
             enviaMsg(movesLikeJagger.decision());
             
-             if (probability<0.05){
+            
+             if (probability<0.001){
                 System.out.println("passei por aqui - Infectado "+probability);
                 human.transition=INFECTADO;
                 human.state=2;
-             }
-             else if (probability>0.99){
+             }/*
+             else if (probability>0.9999){
                  System.out.println("passei por aqui - Curado "+probability);
                  human.transition=CURADO;
                  human.state=3;
-             }
-            //receiveMsg();
-            try{
-                Thread.sleep(500L);
-            }catch(Exception e){System.out.println(e.getStackTrace());}
+             }*/
         }
-
-        
         public int onEnd(){
             return human.transition;
         }
@@ -147,7 +145,9 @@ public class PersonBehaviour extends FSMBehaviour {
         public void action() {
             
             human.state = 2;
-            StateOneMoves movesLikeJagger = new StateOneMoves(human);
+            recebeMsg();
+            StateTwoMoves movesLikeJagger = new StateTwoMoves(human, human.mapaVisao);
+            enviaMsg(movesLikeJagger.decision());
             
             if (human.state==2)
             {    
@@ -158,22 +158,17 @@ public class PersonBehaviour extends FSMBehaviour {
                     Logger.getLogger(Human.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            
-            
-            enviaMsg(movesLikeJagger.decision());
-            
-           
-            try{
+            /*try{
                 Thread.sleep(500L);
-            }catch(Exception e){System.out.println(e.getStackTrace());}
+            }catch(Exception e){System.out.println(e.getStackTrace());}*/
         }
 
-        public int onEnd(){
+        /*public int onEnd(){
             return human.transition;
-        }
+        }*/
         
         public boolean done() {
-            return human.state != 2;
+            return false;
         }
     }
 
@@ -181,7 +176,7 @@ public class PersonBehaviour extends FSMBehaviour {
 
         public void action() {
             int count = 0;
-            StateOneMoves movesLikeJagger = new StateOneMoves(human);
+            StateOneMoves movesLikeJagger = new StateOneMoves(human, human.mapaVisao);
             human.state = 3;
             if (human.state==3)
             {    
@@ -193,9 +188,9 @@ public class PersonBehaviour extends FSMBehaviour {
                 }
             }
              enviaMsg(movesLikeJagger.decision());
-             try{
+            /*try{
                 Thread.sleep(500L);
-            }catch(Exception e){System.out.println(e.getStackTrace());}
+            }catch(Exception e){System.out.println(e.getStackTrace());}*/
              
             count++;
           /*  if(count>10){
