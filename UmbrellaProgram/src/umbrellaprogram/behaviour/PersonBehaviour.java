@@ -108,7 +108,7 @@ public class PersonBehaviour extends FSMBehaviour {
             enviaMsg(movesLikeJagger.decision());
             //receiveMsg();
             try{
-                Thread.sleep(500L);
+                Thread.sleep(50L);
             }catch(Exception e){System.out.println(e.getStackTrace());}
         }
 
@@ -167,7 +167,7 @@ public class PersonBehaviour extends FSMBehaviour {
         }
         
         public boolean done() {
-            return human.state == 4;
+            return human.state != 4;
         }
     }
 
@@ -177,14 +177,12 @@ public class PersonBehaviour extends FSMBehaviour {
 
         public void action() {
 
-        }
-
-        public int onEnd(){
-            return human.transition;
+            System.out.println("Houve um erro na transicao de estados");
+            System.out.println(super.getAgent().getAgentState());
         }
         
         public boolean done() {
-            return false;
+            return true;
         }
     }
 }

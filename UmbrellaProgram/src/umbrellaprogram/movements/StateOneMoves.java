@@ -25,14 +25,17 @@ public class StateOneMoves {
             if (i > 0 && i < World.humanWorld.length) {
                 for (int j = y - 2; j <= y + 2; j++) {
                     if (j > 0 && j < World.humanWorld.length) {
-                        if (World.humanWorld[i][j] != null
+                        if (World.humanWorld[i][j] != null)
+                            view[l][c] = World.humanWorld[i][j].state;
+                        /*
                                 && (World.humanWorld[i][j].state == 1
                                 || World.humanWorld[i][j].state == 3)) {
                             view[l][c] = World.humanWorld[i][j].state;
                         } else if (World.humanWorld[i][j] != null
                                 && World.humanWorld[i][j].state == 2) {
                             view[l][c] = World.humanWorld[i][j].state;
-                        } else {
+                        }*/
+                        else {
                             view[l][c] = 0;
                         }
                     }
@@ -44,24 +47,16 @@ public class StateOneMoves {
         }
         int flagR = 0, flagL = 0, flagU = 0, flagD = 0;
         for (int i = 0; i < 5; i++) {
-            if (view[i][0] == 1 || view[i][1] == 1) {
-                flagL++;
-            }
-            //if(view[i][0] == 2) flagL--;
-            if (view[i][4] == 1 && view[i][3] == 1) {
-                flagR++;
-            }
-            //if(view[i][4] == 2) flagR--;
+            if (view[i][0] == 1 || view[i][1] == 1) flagL++;
+            if(view[i][0] == 2 || view[i][1] == 2) flagL--;
+            if (view[i][4] == 1 || view[i][3] == 1) flagR++;
+            if(view[i][4] == 2 ||  view[i][3] == 2) flagR--;
         }
         for (int i = 0; i < 5; i++) {
-            if (view[0][i] == 1 && view[1][i] == 1) {
-                flagU++;
-            }
-            //if(view[0][i] == 2) flagU--;
-            if (view[4][i] == 1 && view[3][i] == 1) {
-                flagD++;
-            }
-            //if(view[4][i] == 2) flagD--;
+            if (view[0][i] == 1 || view[1][i] == 1) flagU++;
+            if(view[0][i] == 2 || view[1][i] == 2) flagU--;
+            if (view[4][i] == 1 || view[3][i] == 1) flagD++;
+            if(view[4][i] == 2 || view[3][i] == 2) flagD--;
         }
         int retorno = getMax(flagR, flagL, flagU, flagD);
 
@@ -74,48 +69,29 @@ public class StateOneMoves {
                 int move = rnd.nextInt(4) + 1;
                 switch (move) {
                     case WorldBehaviour.DIRECTION_RIGHT:
-                        if (h.posX + 1 < World.humanWorld.length) {
-                            //h.posX++;
                             return WorldBehaviour.DIRECTION_RIGHT;
-                        }
+                        
                     case WorldBehaviour.DIRECTION_LEFT:
-                        if (h.posX - 1 > 0) {
-                            //h.posX--;
                             return WorldBehaviour.DIRECTION_LEFT;
-                        }
+                        
                     case WorldBehaviour.DIRECTION_UP:
-                        if (h.posY - 1 > 0) {
-                            //h.posY--;
                             return WorldBehaviour.DIRECTION_UP;
-                        }
+                        
                     case WorldBehaviour.DIRECTION_DOWN:
-                        if (h.posY + 1 < World.humanWorld.length) {
-                            //h.posY++;
                             return WorldBehaviour.DIRECTION_DOWN;
-                        }
-                        //return WorldBehaviour.DIRECTION_NONE;
+                        
                 }
-            //return WorldBehaviour.DIRECTION_NONE;
             case 1:
-                if (h.posX + 1 < World.humanWorld.length) {
-                    //h.posX++;
                     return WorldBehaviour.DIRECTION_RIGHT;
-                }
+                
             case 2:
-                if (h.posX - 1 > 0) {
-                    //h.posX--;
                     return WorldBehaviour.DIRECTION_LEFT;
-                }
+                
             case 3:
-                if (h.posY - 1 > 0) {
-                    //h.posY--;
                     return WorldBehaviour.DIRECTION_UP;
-                }
+                
             case 4:
-                if (h.posY + 1 < World.humanWorld.length) {
-                    //h.posY++;
                     return WorldBehaviour.DIRECTION_DOWN;
-                }
         }
 
         return WorldBehaviour.DIRECTION_NONE;
