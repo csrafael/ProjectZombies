@@ -51,7 +51,7 @@ public class World extends Agent{
     public static HashMap<String, PosicaoPP> listaPosicoes =
             new HashMap<String, PosicaoPP>(1000);
         
-    public static int population = 300;
+    public static int population = 100;
     public static long day;
             
     ContainerController containerController;
@@ -62,8 +62,6 @@ public class World extends Agent{
         rnd = new Random();
         humanWorld  = new Human[70][70];
         
-        //90% human; 10% zumbi
-        //mandar estado no construtor
         for (int i = 0; i < population ; i++) 
         {
             int x, y;
@@ -79,7 +77,7 @@ public class World extends Agent{
 
         try 
         {
-            Thread.sleep(2000);
+            Thread.sleep(2000L);
         } 
         catch (InterruptedException ex) 
         {

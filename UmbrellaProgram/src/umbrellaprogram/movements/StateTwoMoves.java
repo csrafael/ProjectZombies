@@ -8,6 +8,7 @@ package umbrellaprogram.movements;
 import java.util.Random;
 import umbrellaprogram.agents.Human;
 import umbrellaprogram.agents.World;
+import umbrellaprogram.behaviour.PersonBehaviour;
 import umbrellaprogram.behaviour.WorldBehaviour;
 
 /**
@@ -56,6 +57,31 @@ public class StateTwoMoves {
             if (view[3][i] == 1)
                 flagR+=2;
         }
+        
+        Double probability = Math.random();
+        
+        float DIE = 0;
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (view[i][j] == 1 || view[i][j] == 3) {
+                    DIE++;
+                }
+            }
+        }
+        
+        for (int i = 1; i < 4; i++) {
+                for (int j = 1; j < 4; j++) {
+                    if (view[i][j] == 1) {
+                        if (probability < 0.6) {
+                            h.state = 4;
+                            h.transition = PersonBehaviour.ZUMBIMORTO;
+                            System.out.println("YEAH, BITCH!");
+                            return WorldBehaviour.DIRECTION_NONE;
+                        }
+                    }
+                }
+            }
 
         struct R = new struct();
         R.count = flagR;

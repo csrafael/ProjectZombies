@@ -11,6 +11,7 @@ import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -36,9 +37,9 @@ public class PersonBehaviour extends FSMBehaviour {
     //Define as constantes das transições
     Human human;
     PosicaoPP position;
+    int countTres, countQuatro;
     public static final int INFECTADO = 1;
     public static final int CURADO = 2;
-    public static final int HUMANOMORTO = 3;
     public static final int ZUMBIMORTO = 4;
     public static final int NASCEU = 5;
     public static final int FIMDACURA = 6;
@@ -60,7 +61,6 @@ public class PersonBehaviour extends FSMBehaviour {
 
         registerTransition(FIRST_STATE, SECOND_STATE, INFECTADO);
         registerTransition(FIRST_STATE, THIRD_STATE, CURADO);
-        registerTransition(FIRST_STATE, FOURTH_STATE, HUMANOMORTO);
         registerTransition(SECOND_STATE, FOURTH_STATE, ZUMBIMORTO);
         registerTransition(FOURTH_STATE, FIRST_STATE, NASCEU);
         registerTransition(THIRD_STATE,FIRST_STATE,FIMDACURA);
@@ -97,7 +97,6 @@ public class PersonBehaviour extends FSMBehaviour {
     void recebeMsg() {
         ACLMessage mensagem = myAgent.blockingReceive();
         String msgRecebida = mensagem.getContent();
-        //System.out.println(mensagem.getContent());
         String[] linhasMsgRecebida = msgRecebida.split("\n");
 
         if (linhasMsgRecebida[0].endsWith("false")) {
@@ -136,15 +135,14 @@ public class PersonBehaviour extends FSMBehaviour {
             
             
              if (probability<0.001){
-                System.out.println("passei por aqui - Infectado "+probability);
                 human.transition=INFECTADO;
                 human.state=2;
-             }/*
-             else if (probability>0.9999){
+             }
+             else if (probability>0.999){
                  System.out.println("passei por aqui - Curado "+probability);
                  human.transition=CURADO;
                  human.state=3;
-             }*/
+             }
         }
         public int onEnd(){
             return human.transition;
@@ -172,25 +170,26 @@ public class PersonBehaviour extends FSMBehaviour {
                     Logger.getLogger(Human.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            /*try{
-                Thread.sleep(500L);
-            }catch(Exception e){System.out.println(e.getStackTrace());}*/
         }
 
-        /*public int onEnd(){
+        public int onEnd(){
             return human.transition;
-        }*/
+        }
         
         public boolean done() {
-            return false;
+            return human.state != 2;
         }
     }
 
     private class ThirdState extends Behaviour {
 
+        public void onStart(){
+            countTres = 0;
+        }
         public void action() {
-            int count = 0;
+            recebeMsg();
             StateOneMoves movesLikeJagger = new StateOneMoves(human, human.mapaVisao);
+             enviaMsg(movesLikeJagger.decision());
             human.state = 3;
             if (human.state==3)
             {    
@@ -201,13 +200,9 @@ public class PersonBehaviour extends FSMBehaviour {
                     Logger.getLogger(Human.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-             enviaMsg(movesLikeJagger.decision());
-            /*try{
-                Thread.sleep(500L);
-            }catch(Exception e){System.out.println(e.getStackTrace());}*/
              
-            count++;
-            if(count>10){
+            countTres++;
+            if(countTres>10){
                 human.state=1;
                 human.transition=FIMDACURA;
             }
@@ -225,11 +220,15 @@ public class PersonBehaviour extends FSMBehaviour {
 
     private class FourthState extends Behaviour {
 
+        public void onStart(){
+            countQuatro = 0;
+        }
+        
         public void action() 
         {
-            int count=0;
-            human.state=4;
             recebeMsg();
+            enviaMsg(WorldBehaviour.DIRECTION_NONE);
+            human.state=4;
             
             if (human.state==4)
             {    
@@ -241,10 +240,10 @@ public class PersonBehaviour extends FSMBehaviour {
                 }
             }
                        
-            count++;
-            if(count<4){
-                human.transition=NASCEU;
+            countQuatro++;
+            if(countQuatro > 100){
                 human.state=1;
+                human.transition=NASCEU;
             }
         }
 

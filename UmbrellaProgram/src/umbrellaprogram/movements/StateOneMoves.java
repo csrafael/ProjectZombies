@@ -30,18 +30,10 @@ public class StateOneMoves {
 
     public int decision() {
 
+        Random rand = new Random();
+
         int flagR = 0, flagL = 0, flagU = 0, flagD = 0;
-        
-        Double probability = Math.random();
-        
-        for(int i = 1; i < 4; i++)
-            for(int j = 1; j < 4; j++)
-                if(view[i][j] == 2 && probability < 0.1){
-                    h.state = 2;
-                    h.transition = PersonBehaviour.INFECTADO;
-                    return WorldBehaviour.DIRECTION_NONE;
-                }
-        
+
         for (int i = 0; i < 5; i++) {
             if (view[i][0] == 1 || view[i][0] == 3) {
                 flagU += AGRUPAMENTO;
@@ -73,34 +65,64 @@ public class StateOneMoves {
             }
         }
         for (int i = 2; i < 3; i++) {
-            if (view[0][i] == 1 ||view[0][i] == 3) {
+            if (view[0][i] == 1 || view[0][i] == 3) {
                 flagL += AGRUPAMENTO;
             }
-            if (view[1][i] == 1||view[1][i] == 3) {
+            if (view[1][i] == 1 || view[1][i] == 3) {
                 flagL += AGRUPAMENTO;
             }
-            if (view[0][i] == 2||view[0][i] == 4) {
+            if (view[0][i] == 2 || view[0][i] == 4) {
                 flagL -= FUGA;
                 flagR += FUGA;
             }
-            if (view[1][i] == 2||view[1][i] == 4) {
+            if (view[1][i] == 2 || view[1][i] == 4) {
                 flagL -= FUGA;
                 flagR += FUGA;
             }
-            if (view[4][i] == 1||view[4][i] == 3) {
+            if (view[4][i] == 1 || view[4][i] == 3) {
                 flagR += AGRUPAMENTO;
             }
-            if (view[3][i] == 1||view[3][i] == 3) {
+            if (view[3][i] == 1 || view[3][i] == 3) {
                 flagR += AGRUPAMENTO;
             }
-            if (view[4][i] == 2||view[4][i] == 4) {
+            if (view[4][i] == 2 || view[4][i] == 4) {
                 flagR -= FUGA;
                 flagL += FUGA;
             }
-            if (view[3][i] == 2||view[3][i] == 4) {
+            if (view[3][i] == 2 || view[3][i] == 4) {
                 flagR -= FUGA;
                 flagL += FUGA;
             }
+        }
+
+        Double probability = Math.random();
+
+        float win = 0;
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (view[i][j] == 1 || view[i][j] == 3) {
+                    win++;
+                }
+            }
+        }
+
+        probability += (win /= 100);
+
+        if (h.state == 1) {
+            for (int i = 1; i < 4; i++) {
+                for (int j = 1; j < 4; j++) {
+                    if (view[i][j] == 2) {
+                        if (probability < 0.6) {
+                            h.state = 2;
+                            h.transition = PersonBehaviour.INFECTADO;
+                            return WorldBehaviour.DIRECTION_NONE;
+                        }
+                    }
+                }
+            }
+        } else {
+            //h.state == 3
         }
 
         struct R = new struct();
@@ -133,7 +155,6 @@ public class StateOneMoves {
             }
         }
 
-        Random rand = new Random();
         int retorno = k[rand.nextInt(c)].retorno;
         return retorno;
     }
