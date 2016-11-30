@@ -51,31 +51,7 @@ public class Human extends Agent {
         this.posY = posY;
         this.state = state;
         mapaVisao = new int[distancia_visao * 2 + 1][distancia_visao * 2 + 1];
-        switch (state) {
-            case 1:
-                try {
-                    avatar = ImageIO.read(new File(imgHuman));
-                    avatars.put(imgHuman, avatar);
-                } catch (IOException ex) {
-                    Logger.getLogger(Human.class.getName()).log(Level.SEVERE, null, ex);
-                }   break;
-            case 2:
-                try {
-                    avatar = ImageIO.read(new File(imgZombie));
-                    avatars.put(imgZombie, avatar);
-                } catch (IOException ex) {
-                    Logger.getLogger(Human.class.getName()).log(Level.SEVERE, null, ex);
-                }   break;
-            case 3:
-                try {
-                    avatar = ImageIO.read(new File(imgHealed));
-                    avatars.put(imgHealed, avatar);
-                } catch (IOException ex) {
-                    Logger.getLogger(Human.class.getName()).log(Level.SEVERE, null, ex);
-                }   break;
-            default:
-                break;
-        }
+
     }
     
     public Image getAvatar() 

@@ -119,6 +119,18 @@ public class PersonBehaviour extends FSMBehaviour {
             Double probability = Math.random();
             recebeMsg();
             human.state = 1;
+            
+                        
+            if (human.state==1)
+            {    
+                try {
+                    human.avatar = ImageIO.read(new File(human.imgHuman));
+                    avatars.put(human.imgHuman, human.avatar);
+                } catch (IOException ex) {
+                    Logger.getLogger(Human.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
             StateOneMoves movesLikeJagger = new StateOneMoves(human, human.mapaVisao);
             enviaMsg(movesLikeJagger.decision());
             

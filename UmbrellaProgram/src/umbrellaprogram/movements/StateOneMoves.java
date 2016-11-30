@@ -43,61 +43,61 @@ public class StateOneMoves {
                 }
         
         for (int i = 0; i < 5; i++) {
-            if (view[i][0] == 1) {
+            if (view[i][0] == 1 || view[i][0] == 3) {
                 flagU += AGRUPAMENTO;
             }
-            if (view[i][1] == 1) {
+            if (view[i][1] == 1 || view[i][1] == 3) {
                 flagU += AGRUPAMENTO;
             }
-            if (view[i][0] == 2) {
+            if (view[i][0] == 2 || view[i][0] == 4) {
                 flagU -= FUGA;
                 flagD += FUGA;
             }
-            if (view[i][1] == 2) {
+            if (view[i][1] == 2 || view[i][1] == 4) {
                 flagU -= FUGA;
                 flagD += FUGA;
             }
-            if (view[i][4] == 1) {
+            if (view[i][4] == 1 || view[i][4] == 3) {
                 flagD += AGRUPAMENTO;
             }
-            if (view[i][3] == 1) {
+            if (view[i][3] == 1 || view[i][3] == 3) {
                 flagD += AGRUPAMENTO;
             }
-            if (view[i][4] == 2) {
+            if (view[i][4] == 2 || view[i][4] == 4) {
                 flagD -= FUGA;
                 flagU += FUGA;
             }
-            if (view[i][3] == 2) {
+            if (view[i][3] == 2 || view[i][3] == 4) {
                 flagD -= FUGA;
                 flagU += FUGA;
             }
         }
         for (int i = 2; i < 3; i++) {
-            if (view[0][i] == 1) {
+            if (view[0][i] == 1 ||view[0][i] == 3) {
                 flagL += AGRUPAMENTO;
             }
-            if (view[1][i] == 1) {
+            if (view[1][i] == 1||view[1][i] == 3) {
                 flagL += AGRUPAMENTO;
             }
-            if (view[0][i] == 2) {
+            if (view[0][i] == 2||view[0][i] == 4) {
                 flagL -= FUGA;
                 flagR += FUGA;
             }
-            if (view[1][i] == 2) {
+            if (view[1][i] == 2||view[1][i] == 4) {
                 flagL -= FUGA;
                 flagR += FUGA;
             }
-            if (view[4][i] == 1) {
+            if (view[4][i] == 1||view[4][i] == 3) {
                 flagR += AGRUPAMENTO;
             }
-            if (view[3][i] == 1) {
+            if (view[3][i] == 1||view[3][i] == 3) {
                 flagR += AGRUPAMENTO;
             }
-            if (view[4][i] == 2) {
+            if (view[4][i] == 2||view[4][i] == 4) {
                 flagR -= FUGA;
                 flagL += FUGA;
             }
-            if (view[3][i] == 2) {
+            if (view[3][i] == 2||view[3][i] == 4) {
                 flagR -= FUGA;
                 flagL += FUGA;
             }
