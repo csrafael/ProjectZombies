@@ -41,36 +41,20 @@ public class StateTwoMoves {
                 flagU+=2;
             if (view[i][1] == 1)
                 flagU+=2;
-            if (view[i][0] == 2)
-                flagU++;
-            if (view[i][1] == 2)
-                flagU++;
             if (view[i][4] == 1)
                 flagD+=2;
             if (view[i][3] == 1)
                 flagD+=2;
-            if (view[i][4] == 2)
-                flagD++;
-            if (view[i][3] == 2)
-                flagD++;
         }
         for (int i = 2; i < 3; i++) {
             if (view[0][i] == 1)
                 flagL+=2;
             if(view[1][i] == 1)
                 flagL+=2;
-            if (view[0][i] == 2)
-                flagL++;
-            if (view[1][i] == 2)
-                flagL++;
             if (view[4][i] == 1)
                 flagR+=2;
             if (view[3][i] == 1)
                 flagR+=2;
-            if (view[4][i] == 2)
-                flagR++;
-            if (view[3][i] == 2) 
-                flagR++;
         }
 
         struct R = new struct();
@@ -105,42 +89,6 @@ public class StateTwoMoves {
 
         Random rand = new Random();
         return k[rand.nextInt(c)].retorno;
-        /*int retorno = getMax(flagR, flagL, flagU, flagD);
-
-        //AS ATUALIZACOES DE X E Y SERAO DEIXADAS PARA A COMINUCACAO COM
-        //A CLASSE WORLDBEHAVIOUR
-        switch (retorno) {
-            case 0:
-                
-            case 1:
-                return WorldBehaviour.DIRECTION_RIGHT;
-
-            case 2:
-                return WorldBehaviour.DIRECTION_LEFT;
-
-            case 3:
-                return WorldBehaviour.DIRECTION_UP;
-
-            case 4:
-                return WorldBehaviour.DIRECTION_DOWN;
-        }
-
-        return WorldBehaviour.DIRECTION_NONE;
-    }
-
-    private int getMax(int a, int b, int c, int d) {
-        if ((a > b) && (a > c) && (a > d)) {
-            return 1;
-        } else if ((b > a) && (b > c) && (b > d)) {
-            return 2;
-        } else if ((c > a) && (c > b) && (c > d)) {
-            return 3;
-        } else if ((d > a) && (d > b) && (d > c)) {
-            return 4;
-        }
-        return 0;
-    }*/
-
     }
     private void ordena(struct k[]) {
         for (int i = 0; i < k.length; i++) {

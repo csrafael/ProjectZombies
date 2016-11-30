@@ -3,6 +3,7 @@ package umbrellaprogram.movements;
 import umbrellaprogram.agents.Human;
 import umbrellaprogram.agents.World;
 import java.util.Random;
+import umbrellaprogram.behaviour.PersonBehaviour;
 import umbrellaprogram.behaviour.WorldBehaviour;
 
 public class StateOneMoves {
@@ -11,6 +12,8 @@ public class StateOneMoves {
     int x, y;
     int view[][];
     Human h;
+    public static final int AGRUPAMENTO = 1;
+    public static final int FUGA = 10;
 
     public class struct {
 
@@ -26,49 +29,78 @@ public class StateOneMoves {
     }
 
     public int decision() {
-        /*for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                System.out.print(view[i][j] + " ");
-            }
-            System.out.println();
-        }
-        System.out.println();*/
+
         int flagR = 0, flagL = 0, flagU = 0, flagD = 0;
+        
+        Double probability = Math.random();
+        
+        for(int i = 1; i < 4; i++)
+            for(int j = 1; j < 4; j++)
+                if(view[i][j] == 2 && probability < 0.1){
+                    h.state = 2;
+                    h.transition = PersonBehaviour.INFECTADO;
+                    return WorldBehaviour.DIRECTION_NONE;
+                }
+        
         for (int i = 0; i < 5; i++) {
-            if (view[i][0] == 1)
-                flagU++;
-            if (view[i][1] == 1)
-                flagU++;
-            if (view[i][0] == 2)
-                flagU -= 2;
-            if (view[i][1] == 2)
-                flagU -= 2;
-            if (view[i][4] == 1)
-                flagD++;
-            if (view[i][3] == 1)
-                flagD++;
-            if (view[i][4] == 2)
-                flagD -= 2;
-            if (view[i][3] == 2)
-                flagD -= 2;
+            if (view[i][0] == 1) {
+                flagU += AGRUPAMENTO;
+            }
+            if (view[i][1] == 1) {
+                flagU += AGRUPAMENTO;
+            }
+            if (view[i][0] == 2) {
+                flagU -= FUGA;
+                flagD += FUGA;
+            }
+            if (view[i][1] == 2) {
+                flagU -= FUGA;
+                flagD += FUGA;
+            }
+            if (view[i][4] == 1) {
+                flagD += AGRUPAMENTO;
+            }
+            if (view[i][3] == 1) {
+                flagD += AGRUPAMENTO;
+            }
+            if (view[i][4] == 2) {
+                flagD -= FUGA;
+                flagU += FUGA;
+            }
+            if (view[i][3] == 2) {
+                flagD -= FUGA;
+                flagU += FUGA;
+            }
         }
         for (int i = 2; i < 3; i++) {
-            if (view[0][i] == 1)
-                flagL++;
-            if(view[1][i] == 1)
-                flagL++;
-            if (view[0][i] == 2)
-                flagL -= 2;
-            if (view[1][i] == 2)
-                flagL -= 2;
-            if (view[4][i] == 1)
-                flagR++;
-            if (view[3][i] == 1)
-                flagR++;
-            if (view[4][i] == 2)
-                flagR -= 2;
-            if (view[3][i] == 2) 
-                flagR -= 2;
+            if (view[0][i] == 1) {
+                flagL += AGRUPAMENTO;
+            }
+            if (view[1][i] == 1) {
+                flagL += AGRUPAMENTO;
+            }
+            if (view[0][i] == 2) {
+                flagL -= FUGA;
+                flagR += FUGA;
+            }
+            if (view[1][i] == 2) {
+                flagL -= FUGA;
+                flagR += FUGA;
+            }
+            if (view[4][i] == 1) {
+                flagR += AGRUPAMENTO;
+            }
+            if (view[3][i] == 1) {
+                flagR += AGRUPAMENTO;
+            }
+            if (view[4][i] == 2) {
+                flagR -= FUGA;
+                flagL += FUGA;
+            }
+            if (view[3][i] == 2) {
+                flagR -= FUGA;
+                flagL += FUGA;
+            }
         }
 
         struct R = new struct();
@@ -103,67 +135,9 @@ public class StateOneMoves {
 
         Random rand = new Random();
         int retorno = k[rand.nextInt(c)].retorno;
-
-        /*switch (retorno) {
-            case WorldBehaviour.DIRECTION_RIGHT:
-                if(h.posX == World.humanWorld.length - 1) return WorldBehaviour.DIRECTION_NONE;
-            case WorldBehaviour.DIRECTION_LEFT:
-                if(h.posX < 1) return WorldBehaviour.DIRECTION_NONE;
-            case WorldBehaviour.DIRECTION_UP:
-                if(h.posY < 1) return WorldBehaviour.DIRECTION_NONE;
-            case WorldBehaviour.DIRECTION_DOWN:
-                if(h.posY == World.humanWorld.length - 1) return WorldBehaviour.DIRECTION_NONE;
-        }*/
-
         return retorno;
-        /*
-        int retorno = getMax(flagR, flagL, flagU, flagD);
-
-        switch (retorno) {
-            case 0:
-                Random rnd = new Random();
-                int move = rnd.nextInt(4) + 1;
-                switch (move) {
-                    case WorldBehaviour.DIRECTION_RIGHT:
-                        return WorldBehaviour.DIRECTION_RIGHT;
-
-                    case WorldBehaviour.DIRECTION_LEFT:
-                        return WorldBehaviour.DIRECTION_LEFT;
-
-                    case WorldBehaviour.DIRECTION_UP:
-                        return WorldBehaviour.DIRECTION_UP;
-
-                    case WorldBehaviour.DIRECTION_DOWN:
-                        return WorldBehaviour.DIRECTION_DOWN;
-                }
-            case 1:
-                return WorldBehaviour.DIRECTION_RIGHT;
-
-            case 2:
-                return WorldBehaviour.DIRECTION_LEFT;
-
-            case 3:
-                return WorldBehaviour.DIRECTION_UP;
-
-            case 4:
-                return WorldBehaviour.DIRECTION_DOWN;
-        }
-
-        return WorldBehaviour.DIRECTION_NONE;*/
     }
 
-    /*private int getMax(int a, int b, int c, int d) {
-        if ((a > b) && (a > c) && (a > d)) {
-            return 1;
-        } else if ((b > a) && (b > c) && (b > d)) {
-            return 2;
-        } else if ((c > a) && (c > b) && (c > d)) {
-            return 3;
-        } else if ((d > a) && (d > b) && (d > c)) {
-            return 4;
-        }
-        return 0;
-    }*/
     private void ordena(struct k[]) {
         for (int i = 0; i < k.length; i++) {
             for (int j = i + 1; j < k.length; j++) {
