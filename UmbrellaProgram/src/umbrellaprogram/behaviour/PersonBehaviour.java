@@ -41,6 +41,7 @@ public class PersonBehaviour extends FSMBehaviour {
     public static final int HUMANOMORTO = 3;
     public static final int ZUMBIMORTO = 4;
     public static final int NASCEU = 5;
+    public static final int FIMDACURA = 6;
     public static final int ZERO = 0;
 
     
@@ -62,6 +63,7 @@ public class PersonBehaviour extends FSMBehaviour {
         registerTransition(FIRST_STATE, FOURTH_STATE, HUMANOMORTO);
         registerTransition(SECOND_STATE, FOURTH_STATE, ZUMBIMORTO);
         registerTransition(FOURTH_STATE, FIRST_STATE, NASCEU);
+        registerTransition(THIRD_STATE,FIRST_STATE,FIMDACURA);
 
         registerDefaultTransition(FIRST_STATE, ERROR_STATE);
         registerDefaultTransition(SECOND_STATE, ERROR_STATE);
@@ -193,10 +195,10 @@ public class PersonBehaviour extends FSMBehaviour {
             }catch(Exception e){System.out.println(e.getStackTrace());}*/
              
             count++;
-          /*  if(count>10){
+            if(count>10){
                 human.state=1;
-                human.transition=
-            }*/
+                human.transition=FIMDACURA;
+            }
         }
 
         
@@ -211,8 +213,27 @@ public class PersonBehaviour extends FSMBehaviour {
 
     private class FourthState extends Behaviour {
 
-        public void action() {
-
+        public void action() 
+        {
+            int count=0;
+            human.state=4;
+            recebeMsg();
+            
+            if (human.state==4)
+            {    
+                try {
+                    human.avatar = ImageIO.read(new File(human.imgDead));
+                    avatars.put(human.imgDead, human.avatar);
+                } catch (IOException ex) {
+                    Logger.getLogger(Human.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+                       
+            count++;
+            if(count<4){
+                human.transition=NASCEU;
+                human.state=1;
+            }
         }
 
         public int onEnd(){

@@ -37,7 +37,8 @@ public class Human extends Agent {
     public int state, transition;
     public int mapaVisao[][];
     
-    public String imgHuman="res/human.png", imgZombie = "res/zombie.png",imgHealed = "res/healed.png";
+    public String imgHuman="res/human.png", imgZombie = "res/ZombieJake.png";
+    public String imgHealed = "res/healed.png", imgDead="res/Death.png";
     public  Image avatar;
     protected Behaviour behaviour;
     

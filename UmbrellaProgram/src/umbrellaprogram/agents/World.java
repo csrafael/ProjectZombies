@@ -60,7 +60,7 @@ public class World extends Agent{
     {
         containerController = this.getContainerController();
         rnd = new Random();
-        humanWorld  = new Human[50][50];
+        humanWorld  = new Human[70][70];
         
         //90% human; 10% zumbi
         //mandar estado no construtor
